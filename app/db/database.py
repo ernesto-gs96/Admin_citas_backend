@@ -1,14 +1,9 @@
-import os
-
-from dotenv import load_dotenv
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import declarative_base
+from app.core.config import settings
 
-# Esto busca el archivo .env e inserta las variables en la memoria
-load_dotenv() 
-
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = settings.DATABASE_URL
 
 engine = create_async_engine(DATABASE_URL)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)

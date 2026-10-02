@@ -1,11 +1,7 @@
-import os
-from dotenv import load_dotenv
+from app.core.config import settings
 from fastapi_users.authentication import AuthenticationBackend, BearerTransport, JWTStrategy
 
-# Esto busca el archivo .env e inserta las variables en la memoria
-load_dotenv() 
-
-SECRET = os.getenv("SECRET") # Debería venir de tu archivo .env
+SECRET = settings.SECRET
 
 # Usaremos un token Bearer (que Next.js enviará en la cabecera Authorization)
 bearer_transport = BearerTransport(tokenUrl="api/auth/jwt/login")
