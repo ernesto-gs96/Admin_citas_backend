@@ -9,7 +9,7 @@ from app.db.database import engine, Base
 # Esta función se ejecuta justo antes de que el servidor empiece a recibir peticiones
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Conectarse a Neon y crear todas las tablas definidas en los modelos
+    # Conectarse a la BD y crear todas las tablas definidas en los modelos si no existen
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     yield
@@ -18,8 +18,9 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="SaaS Citas API", lifespan=lifespan)
 
 # 1. Rutas de Login / Logout
+# requires_verification=True: Impide iniciar sesión a usuarios que no hayan verificado su correo
 app.include_router(
-    fastapi_users.get_auth_router(auth_backend),
+    fastapi_users.get_auth_router(auth_backend, requires_verification=True),
     prefix="/api/auth/jwt",
     tags=["auth"]
 )
@@ -45,12 +46,15 @@ app.include_router(
     tags=["auth"],
 )
 
-# EJEMPLO: Una ruta privada para usuarios autenticados y activos
+# EJEMPLO: Rutas privadas protegidas (requieren usuario autenticado, activo y verificado)
 @app.get("/api/ruta-secreta", tags=["Privado"])
 async def ruta_protegida(user: User = Depends(current_active_user)):
-    return {"mensaje": f"Hola {user.email}, estás autenticado y tu ID es {user.id}"}
+    return {
+        "mensaje": f"Hola {user.email}, estás autenticado y tu correo está verificado.",
+        "user_id": str(user.id),
+        "is_verified": user.is_verified,
+    }
 
-# EJEMPLO: Una ruta que requiere obligatoriamente que el usuario haya verificado su correo
 @app.get("/api/ruta-solo-verificados", tags=["Privado"])
 async def ruta_solo_verificados(user: User = Depends(current_verified_user)):
     return {

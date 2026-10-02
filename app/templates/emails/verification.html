@@ -1,0 +1,31 @@
+{% extends "emails/base.html" %}
+
+{% block title %}Verifica tu cuenta - {{ app_name }}{% endblock %}
+
+{% block header %}
+<div class="header header-primary">
+  <h1>{{ app_name }}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<h2>¡Te damos la bienvenida!</h2>
+<p>Gracias por unirte a nuestra plataforma. Para verificar tu dirección de correo electrónico y activar tu cuenta, haz clic en el siguiente botón:</p>
+
+<div class="btn-container">
+  <a href="{{ verification_url }}" class="btn btn-primary" target="_blank">Verificar mi correo electrónico</a>
+</div>
+
+<p class="subtext">Si el botón no funciona en tu cliente de correo, copia y pega el siguiente enlace en tu navegador:</p>
+<p class="subtext" style="word-break: break-all;">
+  <a href="{{ verification_url }}" style="color: #2563eb;">{{ verification_url }}</a>
+</p>
+
+<p class="subtext" style="margin-top: 24px;">O si tu pantalla de verificación solicita el token directo:</p>
+<div class="token-box">{{ token }}</div>
+
+<p class="subtext" style="margin-top: 28px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+  ⏱️ Este enlace es válido durante <strong>24 horas</strong>.<br>
+  Si tú no creaste esta cuenta, puedes desestimar este mensaje de forma segura.
+</p>
+{% endblock %}

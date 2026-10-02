@@ -72,8 +72,9 @@ fastapi_users = FastAPIUsers[User, uuid.UUID](
     [auth_backend],
 )
 
-# Dependencia para proteger rutas: sólo usuarios activos
-current_active_user = fastapi_users.current_user(active=True)
+# Dependencia para proteger rutas: requiere usuario activo Y correo verificado
+current_active_user = fastapi_users.current_user(active=True, verified=True)
+current_verified_user = current_active_user
 
-# Dependencia para proteger rutas que exigen además que el correo esté verificado
-current_verified_user = fastapi_users.current_user(active=True, verified=True)
+# Dependencia para rutas que permitan usuarios aún no verificados
+current_user_any = fastapi_users.current_user(active=True)
