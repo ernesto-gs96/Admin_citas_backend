@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ app_name }}{% endblock %}</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      width: 100%;
+      background-color: #f8fafc;
+      padding: 40px 0;
+    }
+    .card {
+      max-width: 580px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .header {
+      padding: 32px 24px;
+      text-align: center;
+      color: #ffffff;
+    }
+    .header-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    }
+    .header-danger {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .body {
+      padding: 36px 32px;
+    }
+    .body h2 {
+      color: #0f172a;
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .body p {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 16px 0;
+    }
+    .btn-container {
+      text-align: center;
+      margin: 28px 0;
+    }
+    .btn {
+      color: #ffffff !important;
+      padding: 14px 32px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    .btn-primary {
+      background-color: #2563eb;
+    }
+    .btn-danger {
+      background-color: #dc2626;
+    }
+    .token-box {
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      font-size: 13px;
+      word-break: break-all;
+      color: #0f172a;
+      margin-top: 8px;
+    }
+    .subtext {
+      font-size: 13px !important;
+      color: #64748b !important;
+    }
+    .footer {
+      background-color: #f8fafc;
+      padding: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      {% block header %}
+      <div class="header header-primary">
+        <h1>{{ app_name }}</h1>
+      </div>
+      {% endblock %}
+
+      <div class="body">
+        {% block content %}{% endblock %}
+      </div>
+
+      <div class="footer">
+        {% block footer %}
+        © {{ app_name }}. Todos los derechos reservados.
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
